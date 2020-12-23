@@ -59,6 +59,11 @@ import { GetUserAction } from './User/Action/GetUserAction';
 import { UpdateUserCommandHandler } from 'src/Application/HumanResource/User/Command/UpdateUserCommandHandler';
 import { GetUserAdministrativeByIdQueryHandler } from 'src/Application/HumanResource/User/Query/GetUserAdministrativeByIdQueryHandler';
 import { GetLeavesAction } from './Leave/Action/GetLeavesAction';
+import { MealTicketRemoval } from 'src/Domain/HumanResource/MealTicket/MealTicketRemoval.entity';
+import { MealTicketRemovalRepository } from './MealTicket/Repository/MealTicketRemovalRepository';
+import { IsMealTicketRemovalAlreadyExist } from 'src/Domain/HumanResource/MealTicket/Specification/IsMealTicketRemovalAlreadyExist';
+import { CreateMealTicketRemovalCommandHandler } from 'src/Application/HumanResource/MealTicket/Command/CreateMealTicketRemovalCommandHandler';
+import { CreateMealTicketRemovalAction } from './MealTicket/Action/CreateMealTicketRemovalAction';
 
 @Module({
   imports: [
@@ -72,7 +77,8 @@ import { GetLeavesAction } from './Leave/Action/GetLeavesAction';
       LeaveRequest,
       Leave,
       Event,
-      Cooperative
+      Cooperative,
+      MealTicketRemoval
     ])
   ],
   controllers: [
@@ -91,7 +97,8 @@ import { GetLeavesAction } from './Leave/Action/GetLeavesAction';
     GetLeaveRequestAction,
     CreateLeaveRequestAction,
     RefuseLeaveRequestAction,
-    AcceptLeaveRequestAction
+    AcceptLeaveRequestAction,
+    CreateMealTicketRemovalAction
   ],
   providers: [
     {provide: 'IUserRepository', useClass: UserRepository},
@@ -103,6 +110,7 @@ import { GetLeavesAction } from './Leave/Action/GetLeavesAction';
     {provide: 'IFileRepository', useClass: FileRepository},
     {provide: 'IEventRepository', useClass: EventRepository},
     {provide: 'ICooperativeRepository', useClass: CooperativeRepository},
+    {provide: 'IMealTicketRemovalRepository', useClass: MealTicketRemovalRepository},
     {
       provide: 'IUserAdministrativeRepository',
       useClass: UserAdministrativeRepository
@@ -131,6 +139,8 @@ import { GetLeavesAction } from './Leave/Action/GetLeavesAction';
     GetLeaveRequestsQueryHandler,
     GetLeaveRequestByIdQueryHandler,
     DoesEventsOrLeaveExistForPeriod,
+    IsMealTicketRemovalAlreadyExist,
+    CreateMealTicketRemovalCommandHandler
   ]
 })
 export class HumanResourceModule {}
